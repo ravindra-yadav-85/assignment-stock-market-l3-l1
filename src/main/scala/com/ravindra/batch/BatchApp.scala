@@ -6,6 +6,7 @@ import com.typesafe.config.{Config, ConfigFactory}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 object BatchApp extends App with Common {
+  case class Arguments(configPath: String = "")
 
   val parser = new scopt.OptionParser[Arguments]("Parsing application") {
 
@@ -47,6 +48,4 @@ object BatchApp extends App with Common {
     case Some(arguments) => main(arguments)
     case None =>
   }
-
-  case class Arguments(configPath: String = "")
 }

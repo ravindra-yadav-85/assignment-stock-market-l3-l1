@@ -1,34 +1,15 @@
 package com.ravindra.utility
 
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.types.{DoubleType, IntegerType, LongType, StringType, StructField, StructType, TimestampType}
+import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
 import org.apache.spark.util.SizeEstimator
 
 import scala.collection.mutable.Map
 
+case class LevelL1RelevantFields(time: String, bid_price: Double, ask_price: Double, bid_size: Int, ask_size: Int, seq_num: Long)
+
 trait Common {
-
-  case class LevelL1RelevantFields(time: String, bid_price: Double, ask_price: Double, bid_size: Int, ask_size: Int, seq_num: Long)
-
-  val schema = StructType(List(
-    StructField("seq_num", LongType, true),
-    StructField("add_order_id", LongType, true),
-    StructField("add_side", StringType, true),
-    StructField("add_price", DoubleType, true),
-    StructField("add_qty", IntegerType, true),
-    StructField("update_order_id", LongType, true),
-    StructField("update_side", DoubleType, true),
-    StructField("update_price", DoubleType, true),
-    StructField("update_qty", IntegerType, true),
-    StructField("delete_order_id", LongType, true),
-    StructField("delete_side", DoubleType, true),
-    StructField("trade_order_id", LongType, true),
-    StructField("trade_side", DoubleType, true),
-    StructField("trade_price", DoubleType, true),
-    StructField("trade_qty", IntegerType, true),
-    StructField("time", TimestampType, true)
-  ))
 
   /**
    * Creates a SparkSession
@@ -148,7 +129,7 @@ trait Common {
       //seq_num,add_order_id,add_side,add_price,add_qty,update_order_id,update_side,update_price,update_qty,delete_order_id,delete_side,trade_order_id,trade_side,trade_price,trade_qty,time
       val time = rec(15).asInstanceOf[String]
       //add order id
-      if (rec(1) != null) {
+      if (rec(1) != null || rec(5) != "") {
         if (rec(2) == "BUY") {
           bid_price = rec(3).asInstanceOf[Double]
           bid_size = rec(4).asInstanceOf[Int]
@@ -173,7 +154,7 @@ trait Common {
         }
       }
       //update order id
-      else if (rec(5) != null)
+      else if (rec(5) != null || rec(5) != "")
         if (rec(6) == "BUY") {
           bid_price = rec(7).asInstanceOf[Double]
           bid_size = rec(8).asInstanceOf[Int]
