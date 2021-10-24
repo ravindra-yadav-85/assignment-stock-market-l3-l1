@@ -1,7 +1,7 @@
 package com.ravindra.utility
 
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.types.StructType
+import org.apache.spark.sql.types.{DoubleType, IntegerType, LongType, StringType, StructField, StructType, TimestampType}
 import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
 import org.apache.spark.util.SizeEstimator
 
@@ -9,9 +9,26 @@ import scala.collection.mutable.Map
 
 trait Common {
 
-  //time,bid_price,ask_price,bid_size,ask_size,seq_num
   case class LevelL1RelevantFields(time: String, bid_price: Double, ask_price: Double, bid_size: Int, ask_size: Int, seq_num: Long)
 
+  val schema = StructType(List(
+    StructField("seq_num", LongType, true),
+    StructField("add_order_id", LongType, true),
+    StructField("add_side", StringType, true),
+    StructField("add_price", DoubleType, true),
+    StructField("add_qty", IntegerType, true),
+    StructField("update_order_id", LongType, true),
+    StructField("update_side", DoubleType, true),
+    StructField("update_price", DoubleType, true),
+    StructField("update_qty", IntegerType, true),
+    StructField("delete_order_id", LongType, true),
+    StructField("delete_side", DoubleType, true),
+    StructField("trade_order_id", LongType, true),
+    StructField("trade_side", DoubleType, true),
+    StructField("trade_price", DoubleType, true),
+    StructField("trade_qty", IntegerType, true),
+    StructField("time", TimestampType, true)
+  ))
 
   /**
    * Creates a SparkSession
@@ -43,6 +60,10 @@ trait Common {
    */
   def readFromCsv(sparkSession: SparkSession, inputPath: String, inputDelimiter: String, inputHeader: String): DataFrame ={
     return sparkSession.read.option("delimiter", inputDelimiter).option("header", inputHeader).csv(inputPath)
+  }
+
+  def readFromCsv(sparkSession: SparkSession, inputPath: String, inputDelimiter: String, schema: StructType): DataFrame ={
+    return sparkSession.read.option("delimiter", inputDelimiter).schema(schema).csv(inputPath)
   }
 
   /**
@@ -107,6 +128,11 @@ trait Common {
     dataFrame
   }
 
+  /**
+   * return the file stream dataframe
+   * @param inputLevell3RDD
+   * @param sparkSession
+   */
   def getLevelL1RelevantFields(inputLevell3RDD: DataFrame, sparkSession: SparkSession): DataFrame = {
     import sparkSession.implicits._
 

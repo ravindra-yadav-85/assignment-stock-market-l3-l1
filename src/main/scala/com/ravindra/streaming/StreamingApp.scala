@@ -4,7 +4,6 @@ import java.io.File
 
 import com.ravindra.utility.Common
 import com.typesafe.config.{Config, ConfigFactory}
-import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, SaveMode}
 
 object StreamingApp extends App with Common {
@@ -27,24 +26,6 @@ object StreamingApp extends App with Common {
     val sparkSession = sparkSessions(config.getString("spark_app_name"))
 
     //Define the schema for the Input
-    val schema = StructType(List(
-      StructField("seq_num", LongType, true),
-      StructField("add_order_id", LongType, true),
-      StructField("add_side", StringType, true),
-      StructField("add_price", DoubleType, true),
-      StructField("add_qty", IntegerType, true),
-      StructField("update_order_id", LongType, true),
-      StructField("update_side", DoubleType, true),
-      StructField("update_price", DoubleType, true),
-      StructField("update_qty", IntegerType, true),
-      StructField("delete_order_id", LongType, true),
-      StructField("delete_side", DoubleType, true),
-      StructField("trade_order_id", LongType, true),
-      StructField("trade_side", DoubleType, true),
-      StructField("trade_price", DoubleType, true),
-      StructField("trade_qty", IntegerType, true),
-      StructField("time", TimestampType, true)
-    ))
 
     // Create Streaming DataFrame by reading data from File Source.
     val initDF = readFileStream(sparkSession, config.getString("input_file_format"),

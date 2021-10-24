@@ -1,7 +1,6 @@
 package com.ravindra.batch
 
 import java.io.File
-
 import com.ravindra.utility.Common
 import com.typesafe.config.{Config, ConfigFactory}
 import org.apache.spark.sql.{DataFrame, SparkSession}
