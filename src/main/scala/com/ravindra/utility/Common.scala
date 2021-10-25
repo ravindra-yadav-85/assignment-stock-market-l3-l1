@@ -139,6 +139,7 @@ trait Common {
 
           if (bid_price < (bestBidAsk.get("bid_price")).asInstanceOf[Double]) {
             bestBidAsk.put("bid_price", bid_price)
+            bestBidAsk.put("bid_size", bid_size)
           }
 
         } else {
@@ -150,6 +151,7 @@ trait Common {
 
           if (ask_price > (bestBidAsk.get("ask_price")).asInstanceOf[Double]) {
             bestBidAsk.put("ask_price", ask_price)
+            bestBidAsk.put("ask_size", ask_size)
           }
         }
       }
@@ -164,6 +166,7 @@ trait Common {
 
           if (bid_price < (bestBidAsk.get("bid_price")).asInstanceOf[Double]) {
             bestBidAsk.put("bid_price", bid_price)
+            bestBidAsk.put("bid_size", bid_size)
           }
 
         } else {
@@ -175,6 +178,7 @@ trait Common {
 
           if (ask_price > (bestBidAsk.get("ask_price")).asInstanceOf[Double]) {
             bestBidAsk.put("ask_price", ask_price)
+            bestBidAsk.put("ask_size", ask_size)
           }
         }
 
@@ -190,6 +194,6 @@ trait Common {
 
       //time,bid_price,ask_price,bid_size,ask_size,seq_num
       LevelL1RelevantFields(time, bid_price, ask_price, bid_size, ask_size, seq_num)
-    }).toDF()
+    }).toDF().filter($"bid_price" > 0.0 && $"ask_price" > 0.0)
   }
 }
