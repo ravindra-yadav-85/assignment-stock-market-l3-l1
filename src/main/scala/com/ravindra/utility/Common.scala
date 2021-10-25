@@ -124,7 +124,7 @@ trait Common {
     var ask_price = 0.0
     var ask_size = 0
     //time,bid_price,ask_price,bid_size,ask_size,seq_num
-    inputLevell3RDD.map(rec => {
+    val dfL3ToL1 = inputLevell3RDD.map(rec => {
       //val col = rec.split(",")
       //seq_num,add_order_id,add_side,add_price,add_qty,update_order_id,update_side,update_price,update_qty,delete_order_id,delete_side,trade_order_id,trade_side,trade_price,trade_qty,time
       val time = rec(15).asInstanceOf[String]
@@ -195,5 +195,7 @@ trait Common {
       //time,bid_price,ask_price,bid_size,ask_size,seq_num
       LevelL1RelevantFields(time, bid_price, ask_price, bid_size, ask_size, seq_num)
     }).toDF().filter($"bid_price" > 0.0 && $"ask_price" > 0.0)
+
+    dfL3ToL1
   }
 }
