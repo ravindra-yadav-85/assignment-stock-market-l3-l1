@@ -2,13 +2,9 @@
 
 [![Build Status](https://jenkins.datasparkanalytics.com/buildStatus/icon?job=DS_algo)](https://jenkins.datasparkanalytics.com/job/DS_algo)
 
-Use local kubernetes to setup a local Apache Spark cluster and create a streaming application that:
-* streams </data/raw_data/bank_data.csv> through the Spark cluster
-* Aggregates the data using windowing functionality and then reports customers who
-have total transactions of more than IDR 1,000,000,000 in a month. Create a SQL script that performs that same functionality as the application.
-Once again, create the necessary utilities and README files that enable the assessor to easily understand what you have done and to run your code to assess the outcome, the reasoning behind your choice of technology / architecture, the tradeoffs compared to alternative solutions, and potential improvements.
-
-* Create a SQL script that performs that same functionality as the application.
+Used local kubernetes to setup a local Apache Spark cluster and create a streaming application that:
+* Streams </data/raw_data/l3_data_v3.csv> through the Spark cluster. Aggregates the data using windowing functionality/watermarking for handling the late data and then convert to Level L1 report. 
+* Batch Spark application for converting Level L3 to Level L1.
 
 
 ![image](https://user-images.githubusercontent.com/37093793/132118354-932a682d-983a-4011-a0c2-5873be8607b0.png)
@@ -200,7 +196,6 @@ output_path = <LOCATION OF OUTPUT DIRECTORY>
 output_delimiter = <CSV FILE DELIMITER>
 output_header = <FLAG TO INDICATE HEADER AVAILABILITY>
 block_size = <STORAGE BLOCK SIZE>
-sql_query = <SQL QUERY>
 ```
 
 #### Spark Apps Runners
