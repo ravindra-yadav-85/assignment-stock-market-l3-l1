@@ -134,9 +134,11 @@ trait Common {
           bid_price = rec(3).asInstanceOf[Double]
           bid_size = rec(4).asInstanceOf[Int]
 
+          //get the ask details from map
           ask_price = (bestBidAsk.get("ask_price")).asInstanceOf[Double]
           ask_size = (bestBidAsk.get("ask_size")).asInstanceOf[Int]
 
+          //update the bid details in map if required
           if (bid_price < (bestBidAsk.get("bid_price")).asInstanceOf[Double]) {
             bestBidAsk.put("bid_price", bid_price)
             bestBidAsk.put("bid_size", bid_size)
@@ -146,9 +148,11 @@ trait Common {
           ask_price = rec(3).asInstanceOf[Double]
           ask_size = rec(4).asInstanceOf[Int]
 
+          //get the bid details from map
           bid_price = (bestBidAsk.get("bid_price")).asInstanceOf[Double]
           bid_size = (bestBidAsk.get("bid_size")).asInstanceOf[Int]
 
+          //update the ask details in map if required
           if (ask_price > (bestBidAsk.get("ask_price")).asInstanceOf[Double]) {
             bestBidAsk.put("ask_price", ask_price)
             bestBidAsk.put("ask_size", ask_size)
@@ -161,9 +165,11 @@ trait Common {
           bid_price = rec(7).asInstanceOf[Double]
           bid_size = rec(8).asInstanceOf[Int]
 
+          //get the ask details from map
           ask_price = (bestBidAsk.get("ask_price")).asInstanceOf[Double]
           ask_size = (bestBidAsk.get("ask_size")).asInstanceOf[Int]
 
+          //update the bid details in map if required
           if (bid_price < (bestBidAsk.get("bid_price")).asInstanceOf[Double]) {
             bestBidAsk.put("bid_price", bid_price)
             bestBidAsk.put("bid_size", bid_size)
@@ -173,9 +179,11 @@ trait Common {
           ask_price = rec(7).asInstanceOf[Double]
           ask_size = rec(8).asInstanceOf[Int]
 
+          //get the bid details from map
           bid_price = (bestBidAsk.get("bid_price")).asInstanceOf[Double]
           bid_size = (bestBidAsk.get("bid_size")).asInstanceOf[Int]
 
+          //update the ask details in map if required
           if (ask_price > (bestBidAsk.get("ask_price")).asInstanceOf[Double]) {
             bestBidAsk.put("ask_price", ask_price)
             bestBidAsk.put("ask_size", ask_size)
